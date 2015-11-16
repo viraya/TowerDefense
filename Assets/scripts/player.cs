@@ -11,9 +11,9 @@ public class player : MonoBehaviour {
 
 	void Start () {
         _tf = this.GetComponent<Transform>();
-        Vector3 posBack = _tf.position;
         maxSpeed *= 0.03f;
         _tf.position = utils.cP(_tf.position);
+        //_tf.Rotate(new Vector3(-25, 0, 0));
 	}
 	
 	void Update () {
@@ -32,7 +32,7 @@ public class player : MonoBehaviour {
 
         Vector3 addToPos = new Vector3(_xVel, _yVel, _yVel);
 
-        print(addToPos);
+        //print(addToPos);
 
         _tf.Translate(addToPos);
 	}
