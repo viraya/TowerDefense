@@ -10,14 +10,15 @@ public class MainCore : MonoBehaviour {
     [SerializeField]
     private bool _alive = true;
 
-    private GameObject body;
+    //private GameObject body;
 
     void Start() {
-        body = GetComponent<Transform>().parent.gameObject;
+        //body = gameObject;
         InvokeRepeating("dmsHandling", 0, 1);
     }
 
     private void destroyed() {
+        Debug.Log("Main core destroyed");
         CancelInvoke();
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<PolygonCollider2D>().enabled = false;
@@ -35,14 +36,14 @@ public class MainCore : MonoBehaviour {
 
 	private void OnCollisionEnter2D(Collision2D other) {
         string name = other.collider.name;
-        if (name == "enemy" || name == "enemy (Clone)" || name == "LEGO_brick" && _alive) {
+        if (name == "Enemy" || name == "Enemy(Clone)" || name == "Player" && _alive) {
             _dms++;
         }
     }
 
     private void OnCollisionExit2D(Collision2D other) {
         string name = other.collider.name;
-        if (name == "enemy" || name == "enemy (Clone)" || name == "LEGO_brick" && _alive) {
+        if (name == "Enemy" || name == "Enemy(Clone)" || name == "Player" && _alive) {
             _dms--;
         }
     }
