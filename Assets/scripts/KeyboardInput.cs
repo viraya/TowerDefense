@@ -4,59 +4,67 @@ using System.Collections;
 public class KeyboardInput : MonoBehaviour {
 
 	[SerializeField]
-	private	GameObject Player;
+	private	GameObject _player;
 
 	private PlayerMovement _pm;
 
-	private bool left;
-	private bool forward;
-	private bool right;
-	private bool backward;
+	private bool _left;
+	private bool _forward;
+	private bool _right;
+	private bool _backward;
+
+    private bool _keyDown = false;
 
 	// Use this for initialization
 	void Start () {
-		left = forward = right = backward = false;
-		_pm = Player.GetComponent<PlayerMovement>();
+		_left = _forward = _right = _backward = false;
+		_pm = _player.GetComponent<PlayerMovement>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		keydownCheck ();
+		_keyDown = keydownCheck ();
 		keyupCheck ();
-		_pm.Move (left,forward,right,backward);
+		_pm.Move (_left,_forward,_right,_backward);
 
 	}
 
-	void keydownCheck()
+	bool keydownCheck()
 	{
+        bool keyDown = false;
 		// W key for forward movement
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-			forward = true;
+            keyDown = true;
+			_forward = true;
 			//Debug.Log("W is pressed");
 		}
 		
 		// A key for left side movement
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			left = true;
+            keyDown = true;
+			_left = true;
 			//Debug.Log("A is pressed");
 		}
 		
 		// S key for backwards movement
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-			backward = true;
+            keyDown = true;
+			_backward = true;
 			//Debug.Log("S is pressed");
 		}
 		
 		// D key for right side movements
 		if(Input.GetKeyDown(KeyCode.D))
 		{
-			right = true;
+            keyDown = true;
+			_right = true;
 			//Debug.Log("D is pressed");
 		}
+        return keyDown;
 	}
 
 	void keyupCheck()
@@ -64,28 +72,28 @@ public class KeyboardInput : MonoBehaviour {
 		// W key for forward movement
 		if(Input.GetKeyUp(KeyCode.W))
 		{
-			forward = false;
+			_forward = false;
 			//Debug.Log("W is released");
 		}
 		
 		// A key for left side movement
 		if(Input.GetKeyUp(KeyCode.A))
 		{
-			left = false;
+			_left = false;
 			//Debug.Log("A is released");
 		}
 		
 		// S key for backwards movement
 		if(Input.GetKeyUp(KeyCode.S))
 		{
-			backward = false;
+			_backward = false;
 			//Debug.Log("S is released");
 		}
 		
 		// D key for right side movements
 		if(Input.GetKeyUp(KeyCode.D))
 		{
-			right = false;
+			_right = false;
 			//Debug.Log("D is released");
 		}
 	}

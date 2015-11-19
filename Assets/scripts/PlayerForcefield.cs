@@ -3,16 +3,16 @@ using System.Collections;
 
 public class PlayerForcefield : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy) {
-            enemy.damage(10);
+        CharacterHealth enemy = other.GetComponent<CharacterHealth>();
+        if (enemy && other.gameObject != this.gameObject) {
+            enemy.damage(1);
         }
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy) {
-            enemy.damage(10);
+        CharacterHealth enemy = other.GetComponent<CharacterHealth>();
+        if (enemy && other.gameObject != this.gameObject) {
+            enemy.damage(1);
         }
     }
 }

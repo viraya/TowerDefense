@@ -17,10 +17,12 @@ public class CalculateDepth : MonoBehaviour {
         GameObject[] list = GameObject.FindObjectsOfType<GameObject>();
 
         foreach(GameObject item in list) {
-            Transform tf = item.GetComponent<Transform>();
-            tf.position = new Vector3(tf.position.x,tf.position.y,tf.position.y);
-            if (tf.position.y + 5 > lastY) {
-                lastY = tf.position.y;
+            if (item.tag != "MainCamera") {
+                Transform tf = item.GetComponent<Transform>();
+                tf.position = new Vector3(tf.position.x, tf.position.y, tf.position.y);
+                if (tf.position.y + 5 > lastY) {
+                    lastY = tf.position.y;
+                }
             }
         }
         //if(_backgroundTf && playerTf)

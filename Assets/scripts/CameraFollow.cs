@@ -23,7 +23,8 @@ public class CameraFollow : MonoBehaviour {
 
 		if(target)
 		{
-			transform.position = Vector3.Lerp(this.transform.position,target.position,0.08F) + new Vector3(0,0,-10);
+            Vector3 tar = target.position;
+            transform.position = Vector3.Lerp(this.transform.position, new Vector3(tar.x, tar.y, -20), 0.08F);
 		}
 
 	}
