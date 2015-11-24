@@ -6,37 +6,37 @@ public class KeyboardInput : MonoBehaviour {
 	[SerializeField]
 	private	GameObject _player;
 
-	private PlayerMovement _pm;
+	private Player _pm;
 
 	private bool _left;
 	private bool _forward;
 	private bool _right;
 	private bool _backward;
-
-    private bool _keyDown = false;
+    private bool _leftClick;
 
 	// Use this for initialization
 	void Start () {
-		_left = _forward = _right = _backward = false;
-		_pm = _player.GetComponent<PlayerMovement>();
+		_left = _forward = _right = _backward = _leftClick = false;
+		_pm = _player.GetComponent<Player>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		_keyDown = keydownCheck ();
+		keydownCheck ();
 		keyupCheck ();
 		_pm.Move (_left,_forward,_right,_backward);
+        if (_leftClick) {
+            _pm.Fire();
+        }
 
 	}
 
-	bool keydownCheck()
+	void keydownCheck()
 	{
-        bool keyDown = false;
 		// W key for forward movement
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-            keyDown = true;
 			_forward = true;
 			//Debug.Log("W is pressed");
 		}
@@ -44,7 +44,6 @@ public class KeyboardInput : MonoBehaviour {
 		// A key for left side movement
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-            keyDown = true;
 			_left = true;
 			//Debug.Log("A is pressed");
 		}
@@ -52,7 +51,6 @@ public class KeyboardInput : MonoBehaviour {
 		// S key for backwards movement
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-            keyDown = true;
 			_backward = true;
 			//Debug.Log("S is pressed");
 		}
@@ -60,11 +58,16 @@ public class KeyboardInput : MonoBehaviour {
 		// D key for right side movements
 		if(Input.GetKeyDown(KeyCode.D))
 		{
-            keyDown = true;
 			_right = true;
 			//Debug.Log("D is pressed");
 		}
-        return keyDown;
+
+        if (Input.GetMouseButtonDown(0)) {
+            _leftClick = true;
+            //Debug.Log(LMB is pressed");
+
+        }
+        return;
 	}
 
 	void keyupCheck()
@@ -96,6 +99,10 @@ public class KeyboardInput : MonoBehaviour {
 			_right = false;
 			//Debug.Log("D is released");
 		}
+        if (Input.GetMouseButtonUp(0)) {
+            _leftClick = false;
+            //Debug.Log("LMB is released");
+        }
 	}
 
 }

@@ -50,17 +50,10 @@ public class MainCore : MonoBehaviour {
 
 	private void OnCollisionStay2D(Collision2D other) {
         string name = other.collider.name;
-        if (name == "Enemy" || name == "Enemy(Clone)" || name == "Player" && _alive) {
+        if (name == "Enemy" || name == "Enemy(Clone)" && _alive) {
             if(!_attackers.Contains(other.gameObject)) {
                 _attackers.Add(other.gameObject);
             }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other) {
-        string name = other.collider.name;
-        if (name == "Enemy" || name == "Enemy(Clone)" || name == "Player" && _alive) {
-            //_dms--;
         }
     }
 }

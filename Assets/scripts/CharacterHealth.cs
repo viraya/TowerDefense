@@ -30,7 +30,8 @@ public class CharacterHealth : MonoBehaviour {
     }
 
     private void _death() {
-        if (_killer != "") { Debug.Log(this.name + " was killed by "); }
+        if (_killer != "")
+            Debug.Log(this.name + " was killed by " + _killer);
         Destroy(this.gameObject);
     }
 
@@ -42,7 +43,7 @@ public class CharacterHealth : MonoBehaviour {
     /// <returns>Did this blow kill me, I return true else false.</returns>
     public bool damage(int damage, string attacker = null) {
         _health -= damage;
-        Debug.Log(this + " damaged for " + damage);
+        //Debug.Log(this + " damaged for " + damage);
 
         //Kill confirm, setup for currency later.
         if (health <= 0) {

@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class Player : MonoBehaviour {
 	
 	private Rigidbody2D _rb;
     private Transform _tf;
     private BoxCollider2D _bx;
+    [SerializeField]
+    private Transform _pointer;
+    [SerializeField]
+    private GameObject _bullet;
+    private bool _ready;
+    private float _timer;
+    private float _cooldown = 0.05f;
 
     private bool _walking = false;
     public bool walking {
@@ -21,24 +28,43 @@ public class PlayerMovement : MonoBehaviour {
 
 	float speed = 0.02F;
 
-	// Use this for initialization
 	void Start () {
+        _ready = true;
+        _timer = 0;
 		_rb = this.GetComponent<Rigidbody2D>();
         _tf = this.GetComponent<Transform>();
         _bx = this.GetComponent<BoxCollider2D>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         if (_walking) {
             //walk animation
         } else {
             //idle animation
         }
+        if (!_ready) {
+            _timer += _cooldown;
+        }
+        if (_timer >= 1) {
+            _ready = true;
+            _timer = 0;
+        }
+        rotatePointer();
+        _pointer.position = _tf.position;
 	}
 
     private void _death() {
         Destroy(this.gameObject);
+    }
+
+    public void Fire() {
+        if (_ready) {
+            _ready = false;
+            GameObject bullet = Instantiate<GameObject>(_bullet);
+            bullet.GetComponent<Bullet>().owner = this.name;
+            bullet.transform.position = _pointer.position;
+            bullet.transform.rotation = _pointer.rotation;
+        }
     }
 
 	public void Move(bool left , bool forward , bool right , bool backward)
@@ -75,4 +101,12 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
+    void rotatePointer() {
+        Vector3 _mousePos = Input.mousePosition;
+        Vector3 _objectPos = Camera.main.WorldToScreenPoint(_pointer.position);
+        _mousePos = _objectPos - _mousePos;
+        float _angle = Mathf.Atan2(_mousePos.y, _mousePos.x) * Mathf.Rad2Deg;
+        _pointer.rotation = Quaternion.Lerp(_pointer.rotation, Quaternion.Euler(0, 0, _angle), 0.08f);
+        return;
+    }
 }
