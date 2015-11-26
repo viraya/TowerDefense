@@ -8,7 +8,11 @@ public class Shield : MonoBehaviour {
     [SerializeField]
     private bool _running = true;
     [SerializeField]
+    private bool _turnedOn = true;
+    [SerializeField]
     private List<GameObject> _attackers;
+    [SerializeField]
+    private Sprite[] _shieldStates = new Sprite[5];
 
     void Start() {
         InvokeRepeating("dmsHandling", 0, 1);
@@ -16,16 +20,34 @@ public class Shield : MonoBehaviour {
 
     void FixedUpdate() {
         if (_running) {
-            _health = 100;
-            _running = true;
+            turnOn();
+
+            if (_health >= 90) {
+                this.GetComponent<SpriteRenderer>().sprite = _shieldStates[4];
+            } else if (_health >= 75) {
+                this.GetComponent<SpriteRenderer>().sprite = _shieldStates[3];
+            } else if (_health >= 50) {
+                this.GetComponent<SpriteRenderer>().sprite = _shieldStates[2];
+            } else if (_health >= 25) {
+                this.GetComponent<SpriteRenderer>().sprite = _shieldStates[1];
+            } else if (_health >= 1) {
+                this.GetComponent<SpriteRenderer>().sprite = _shieldStates[0];
+            }
+        }
+    }
+
+    private void turnOn() {
+        if (!_turnedOn) {
+            _turnedOn = true;
+            InvokeRepeating("dmsHandling", 0, 1);
             GetComponent<PolygonCollider2D>().enabled = true;
             GetComponent<SpriteRenderer>().enabled = true;
-            InvokeRepeating("dmsHandling", 0, 1);
         }
     }
 
     private void turnOff() {
         Debug.Log("Shield down");
+        _turnedOn = false;
         CancelInvoke();
         GetComponent<PolygonCollider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;

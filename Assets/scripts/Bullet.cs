@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour {
             CancelInvoke();
             Destroy(this.gameObject);
         }
-        _tf.position += -this.transform.right/20;
+        _tf.position += -this.transform.right/10;
     }
 
 	void OnTriggerEnter2D (Collider2D other) {

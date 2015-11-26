@@ -17,6 +17,9 @@ public class KeyboardInput : MonoBehaviour {
 	private bool _backward;
     private bool _leftClick;
 
+    [SerializeField]
+    private bool _walking = false;
+
 	// Use this for initialization
 	void Start () {
 		_left = _forward = _right = _backward = _leftClick = false;
@@ -26,20 +29,23 @@ public class KeyboardInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		keydownCheck ();
+		_walking = keydownCheck();
 		keyupCheck ();
 		_pm.Move (_left,_forward,_right,_backward);
+        _pm.walking = _walking;
         if (_leftClick) {
             _pm.Fire();
         }
 
 	}
 
-	void keydownCheck()
+	bool keydownCheck()
 	{
+        bool walking = false;
 		// W key for forward movement
 		if(Input.GetKeyDown(KeyCode.W))
 		{
+            walking = true;
 			_forward = true;
 			//Debug.Log("W is pressed");
 		}
@@ -47,6 +53,7 @@ public class KeyboardInput : MonoBehaviour {
 		// A key for left side movement
 		if(Input.GetKeyDown(KeyCode.A))
 		{
+            walking = true;
 			_left = true;
 			//Debug.Log("A is pressed");
 		}
@@ -54,6 +61,7 @@ public class KeyboardInput : MonoBehaviour {
 		// S key for backwards movement
 		if(Input.GetKeyDown(KeyCode.S))
 		{
+            walking = true;
 			_backward = true;
 			//Debug.Log("S is pressed");
 		}
@@ -61,6 +69,7 @@ public class KeyboardInput : MonoBehaviour {
 		// D key for right side movements
 		if(Input.GetKeyDown(KeyCode.D))
 		{
+            walking = true;
 			_right = true;
 			//Debug.Log("D is pressed");
 		}
@@ -75,7 +84,7 @@ public class KeyboardInput : MonoBehaviour {
             //Debug.Log(LMB is pressed");
 
         }
-        return;
+        return walking;
 	}
 
 	void keyupCheck()

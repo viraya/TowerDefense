@@ -3,13 +3,17 @@ using System.Collections;
 
 public class Part : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    [SerializeField]
+    private Shield _shield;
+    public Shield shield {
+        get { return _shield; }
+        set { _shield = value;  }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.name == "Player") {
+            _shield.Heal(20);
+            Destroy(gameObject);
+        }
+    }
 }

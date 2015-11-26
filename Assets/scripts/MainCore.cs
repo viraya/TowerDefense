@@ -24,8 +24,6 @@ public class MainCore : MonoBehaviour {
 
     void FixedUpdate() {
         if (_alive) {
-            _health = 1000;
-            _alive = true;
             GetComponent<SpriteRenderer>().sprite = _workingState;
             InvokeRepeating("dmsHandling", 0, 1);
         }

@@ -13,6 +13,9 @@ public class PartsSpawner : MonoBehaviour {
     [SerializeField]
     private float timer = 1;
 
+    [SerializeField]
+    private Shield shield;
+
     float test = 0;
 
     void Start() {
@@ -36,6 +39,7 @@ public class PartsSpawner : MonoBehaviour {
     void SpawnEnemies(float Size) {
         test += 0.1f;
         GameObject instantiatedPart = Instantiate(Part, CalculatePosition(radius), Quaternion.identity) as GameObject;
+        instantiatedPart.GetComponent<Part>().shield = shield;
         StartCoroutine("Waiting");
     }
 
