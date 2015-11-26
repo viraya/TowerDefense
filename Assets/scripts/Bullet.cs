@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour {
     }
 
     void Movement() {
-        _lifeTime -= 0.1f;
+        _lifeTime -= 0.05f;
         if (_lifeTime <= 0) {
             CancelInvoke();
             Destroy(this.gameObject);

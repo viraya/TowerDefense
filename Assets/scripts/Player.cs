@@ -60,11 +60,22 @@ public class Player : MonoBehaviour {
     public void Fire() {
         if (_ready) {
             _ready = false;
-            GameObject bullet = Instantiate<GameObject>(_bullet);
-            bullet.GetComponent<Bullet>().owner = this.name;
-            bullet.transform.position = _pointer.position;
-            bullet.transform.rotation = _pointer.rotation;
+            GameObject bullet1 = Instantiate<GameObject>(_bullet);
+            bullet1.GetComponent<Bullet>().owner = this.name;
+            bullet1.transform.position = _pointer.position;
+            bullet1.transform.position -= bullet1.transform.up/10;
+            bullet1.transform.rotation = _pointer.rotation;
+            StartCoroutine("SecondFire");
         }
+    }
+
+    IEnumerator SecondFire() {
+        yield return new WaitForSeconds(0.05f);
+        GameObject bullet2 = Instantiate<GameObject>(_bullet);
+        bullet2.GetComponent<Bullet>().owner = this.name;
+        bullet2.transform.position = _pointer.position;
+        bullet2.transform.position += bullet2.transform.up / 10;
+        bullet2.transform.rotation = _pointer.rotation;
     }
 
 	public void Move(bool left , bool forward , bool right , bool backward)
@@ -75,10 +86,10 @@ public class Player : MonoBehaviour {
         if (forward || backward)
             _tf.localScale = new Vector3(_tf.lossyScale.x, Mathf.Abs(_tf.lossyScale.y), _tf.lossyScale.z);
 
-        if (forward) 
+        /*if (forward) 
             _bx.offset = new Vector2(0.5f, 4.3f);
         else if(backward)
-            _bx.offset = new Vector2(0.5f, -4);
+            _bx.offset = new Vector2(0.5f, -4);*/
 
 		if (left) {
 			_rb.transform.Translate(Vector2.left * speed);
@@ -87,7 +98,7 @@ public class Player : MonoBehaviour {
 		if(forward)
 		{
 			_rb.transform.Translate(Vector2.up * speed);
-            _tf.localScale = new Vector3(_tf.lossyScale.x,-_tf.lossyScale.y,_tf.lossyScale.z);
+            //_tf.localScale = new Vector3(_tf.lossyScale.x,-_tf.lossyScale.y,_tf.lossyScale.z);
 		}
 		if(right)
 		{
@@ -97,7 +108,7 @@ public class Player : MonoBehaviour {
 		if(backward)
 		{
 			_rb.transform.Translate(Vector2.down * speed);
-            _tf.localScale = new Vector3(_tf.lossyScale.x, _tf.lossyScale.y, _tf.lossyScale.z);
+            //_tf.localScale = new Vector3(_tf.lossyScale.x, _tf.lossyScale.y, _tf.lossyScale.z);
 		}
 	}
 
@@ -106,7 +117,7 @@ public class Player : MonoBehaviour {
         Vector3 _objectPos = Camera.main.WorldToScreenPoint(_pointer.position);
         _mousePos = _objectPos - _mousePos;
         float _angle = Mathf.Atan2(_mousePos.y, _mousePos.x) * Mathf.Rad2Deg;
-        _pointer.rotation = Quaternion.Lerp(_pointer.rotation, Quaternion.Euler(0, 0, _angle), 0.08f);
+        _pointer.rotation = Quaternion.Lerp(_pointer.rotation, Quaternion.Euler(0, 0, _angle), 0.3f);
         return;
     }
 }

@@ -6,6 +6,9 @@ public class KeyboardInput : MonoBehaviour {
 	[SerializeField]
 	private	GameObject _player;
 
+    [SerializeField]
+    private CameraFollow _cam;
+
 	private Player _pm;
 
 	private bool _left;
@@ -62,6 +65,11 @@ public class KeyboardInput : MonoBehaviour {
 			//Debug.Log("D is pressed");
 		}
 
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            _cam.shake(30);
+        }
+
+        // LMB for shooting
         if (Input.GetMouseButtonDown(0)) {
             _leftClick = true;
             //Debug.Log(LMB is pressed");
