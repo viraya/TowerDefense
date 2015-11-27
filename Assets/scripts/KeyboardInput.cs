@@ -41,11 +41,11 @@ public class KeyboardInput : MonoBehaviour {
 
 	bool keydownCheck()
 	{
-        bool walking = false;
+        string walkTest = "false";
 		// W key for forward movement
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-            walking = true;
+            walkTest = "true";
 			_forward = true;
 			//Debug.Log("W is pressed");
 		}
@@ -53,7 +53,7 @@ public class KeyboardInput : MonoBehaviour {
 		// A key for left side movement
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-            walking = true;
+            walkTest = "true";
 			_left = true;
 			//Debug.Log("A is pressed");
 		}
@@ -61,7 +61,7 @@ public class KeyboardInput : MonoBehaviour {
 		// S key for backwards movement
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-            walking = true;
+            walkTest = "true";
 			_backward = true;
 			//Debug.Log("S is pressed");
 		}
@@ -69,7 +69,7 @@ public class KeyboardInput : MonoBehaviour {
 		// D key for right side movements
 		if(Input.GetKeyDown(KeyCode.D))
 		{
-            walking = true;
+            walkTest = "true";
 			_right = true;
 			//Debug.Log("D is pressed");
 		}
@@ -84,7 +84,10 @@ public class KeyboardInput : MonoBehaviour {
             //Debug.Log(LMB is pressed");
 
         }
-        return walking;
+        if (walkTest != "true") {
+            walkTest = "false";
+        }
+        return walkTest == "true" ? true : true; //Maybe fix later...
 	}
 
 	void keyupCheck()
